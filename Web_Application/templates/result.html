@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link rel="stylesheet" href="{{ url_for('static', filename= 'css/result.css') }}">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.js"></script>
+  <title>Results</title>
+</head>
+<body>
+  <data id="pieChartData">
+    {% for subj, acc in journals['model_weights'].items() %}
+      <data data-subj="{{subj}}"
+            data-acc="{{acc}}"></data>
+    {% endfor %}
+  </data>
+
+  <div id="content">
+    <div class="layer">
+      <div class="g">
+        <div id="results">
+          <h1 class="page-title">Results</h1>
+          <ul class="result-table">
+            <li class="result-item">
+              <span class="result-journal">Journal</span>
+              <span class="result-percentage">Percentage</span>
+            </li>
+            {% for journal in journals['final_prediction'][:5] %}
+              <data data-journal="{{journal[0]}}" 
+                    data-abbr="{{journal[1]}}" 
+                    data-percentage="{{journal[2]}}"></data>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+      <div class="g">
+        <div id="weights">
+          <canvas id="pieChart"></canvas>
+        </div>
+      </div>
+    </div>
+    <hr/>
+    <div class="layer">
+      <h1 class="page-title">Partial Results</h1>
+    </div>
+    <div class="layer layer--scroll">
+      <div class="g fill">
+        <div class="partial-result partial-result--subjareas">
+          {% set weight= journals['model_weights']['subj_area_model'] * 100 %}
+          <h3 class="card-title">Subject Areas  {{'%0.1f' | format(weight)}}%</h3>
+          <ul class="result-table">
+            <li class="result-item">
+              <span class="result-journal">Journal</span>
+              <span class="result-percentage">Percentage</span>
+            </li>
+            {% for journal in journals['subject_prediction'][:20] %}
+              <data data-journal="{{journal[0]}}" 
+                    data-abbr="{{journal[1]}}" 
+                    data-percentage="{{journal[2]}}"></data>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+      {% for subj, pred in journals['abstract_prediction'].items() %}
+      <div class="g fill">
+        <div class="partial-result" data-subj="{{subj}}">
+          {% set weight= journals['model_weights'][subj] * 100 %}
+          <h3 class="card-title">Subject specific ({{subj}}) {{'%0.1f' | format(weight)}}%</h3>
+          <ul class="result-table">
+            <li class="result-item">
+              <span class="result-journal">Journal</span>
+              <span class="result-percentage">Percentage</span>
+            </li>
+            {% for journal in pred[:20] %}
+              <data data-journal="{{journal[0]}}" 
+                    data-abbr="{{journal[1]}}" 
+                    data-percentage="{{journal[2]}}"></data>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  
+  <!-- Main JavaScript -->
+  <script src="{{ url_for('static', filename= 'js/results.js') }}"></script>
+</body>
+</html>

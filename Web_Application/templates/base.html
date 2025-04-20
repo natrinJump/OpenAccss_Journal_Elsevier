@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="{{ url_for('static', filename= 'css/base.css') }}">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.jquery.min.js"></script>
+  <link href="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.min.css" rel="stylesheet"/>
+  <title>Product</title>
+</head>
+<body>
+  <span class="loader" style="display: none;"></span>
+  <div class="content">
+    <h1 class="page-title">Journal Finder</h1>
+    <form method="post" action="/run">
+      <div class="form-group">
+        <label for="abstract">Abstract</label>
+        <textarea name="abstract" class="form-control"
+                  placeholder="Your abstract here">{{ request.form['abstract'] }}</textarea required>
+      </div>
+      <div class="form-group">
+        <label for="subj-area">Subjects</label>
+        <select data-placeholder="Begin typing a name to filter..." multiple class="chosen-select" name="subj-area" required>
+          <option value=""></option>
+          <option value="MULT">General</option>
+          <option value="AGRI">Agricultural and Biological Sciences</option>
+          <option value="ARTS">Arts and Humanities</option>
+          <option value="BIOC">Biochemistry, Genetics and Molecular Biology</option>
+          <option value="BUSI">Business, Management and Accounting</option>
+          <option value="CENG">Chemical Engineering</option>
+          <option value="CHEM">Chemistry</option>
+          <option value="COMP">Computer Science</option>
+          <option value="DECI">Decision Sciences</option>
+          <option value="EART">Earth and Planetary Sciences</option>
+          <option value="ECON">Economics, Econometrics and Finance</option>
+          <option value="ENER">Energy</option>
+          <option value="ENGI">Engineering</option>
+          <option value="ENVI">Environmental Science</option>
+          <option value="IMMU">Immunology and Microbiology</option>
+          <option value="MATE">Materials Science</option>
+          <option value="MATH">Mathematics</option>
+          <option value="MEDI">Medicine</option>
+          <option value="NEUR">Neuroscience</option>
+          <option value="NURS">Nursing</option>
+          <option value="PHAR">Pharmacology, Toxicology and Pharmaceutics</option>
+          <option value="PHYS">Physics and Astronomy</option>
+          <option value="PSYC">Psychology</option>
+          <option value="SOCI">Social Sciences</option>
+          <option value="VETE">Veterinary</option>
+          <option value="HEAL">Health Professions</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <input type="submit" value="Find Relevant Journals">
+      </div>
+    </form>
+  </div>
+  
+  <!-- Main JavaScript -->
+  <script src="{{ url_for('static', filename= 'js/base.js') }}"></script>
+</body>
+</html>
