@@ -1,0 +1,9 @@
+keras
+tensorflow
+transformers
+scikit-learn
+flask
+numpy
+torch
+torchvision
+torchaudio
